@@ -1,4 +1,5 @@
 node_modules
+src/node_modules
 .serverless
 .DS_Store
 serverless.yml
