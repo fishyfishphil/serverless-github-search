@@ -1,0 +1,24 @@
+service: github-search
+custom:
+  github_token: "****************************************"
+
+
+provider:
+  profile: private
+  name: aws
+  memorySize: 128
+  timeout: 5
+  runtime: nodejs8.10
+  stage: dev
+  region: eu-west-1
+  environment:
+    GITHUB_TOKEN: ${self:custom.github_token}
+
+functions:
+  find:
+    handler: src/index.handler
+    events:
+      - http:
+          path: find
+          method: post
+          cors: true
