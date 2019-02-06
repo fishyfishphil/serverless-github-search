@@ -1,0 +1,9 @@
+{
+  "name": "serverless-github-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "dependencies": {
+    "serverless-s3bucket-sync": "^0.1.5"
+  }
+}
