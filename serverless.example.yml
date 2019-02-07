@@ -1,10 +1,16 @@
 service: github-search
 custom:
   github_token: "****************************************"
+  s3-bucket-name: "github-search-vue-app"
+  s3Sync:
+    - bucketName: ${self:custom.s3-bucket-name}
+      localDir: vue
 
+plugins:
+  - serverless-s3-sync
 
 provider:
-  profile: private
+  profile: default
   name: aws
   memorySize: 128
   timeout: 5
@@ -22,3 +28,35 @@ functions:
           path: find
           method: post
           cors: true
+
+resources:
+  Resources:
+    StaticSite:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicRead
+        BucketName: ${self:custom.s3-bucket-name}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+    StaticSiteS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: StaticSite
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: "*"
+              Action:
+              - s3:GetObject
+              Resource:
+                Fn::Join: [
+                  "", [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "StaticSite"
+                    },
+                    "/*"
+                  ]
+                ]
