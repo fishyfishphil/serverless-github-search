@@ -3,25 +3,79 @@
 
 <head>
     <title></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+    <style>
+        #root {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        #content {
+            flex: 1;
+        }
+
+        .navbar-item.navbar-center {
+            flex-grow: 1;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="root" class="container">
+    <div id="root">
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand"></div>
-            <div class="navbar-menu">
-                <div class="navbar-start">
-                    <div class="navbar-item">
-                        <input class="input" type="text" v-model="username" placeholder="Username">
-                    </div>
-                    <div class="navbar-item">
-                        <button @click="find" class="button">Find</button>
-                    </div>
+            <div class="navbar-menu container">
+                <div class="navbar-start"></div>
+                <div class="navbar-item">
+                    <input class="input" type="text" v-model="username" placeholder="Username">
+                </div>
+                <div class="navbar-item">
+                    <button @click="find" class="button">Find</button>
                 </div>
                 <div class="navbar-end"></div>
             </div>
         </nav>
+
+        <div id="content" class="container">
+            <template v-for="item in items">
+                <div class="box">
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong><a v-bind:href="item.url">{{ item.title }}</a></strong>
+                                    <br>
+                                    {{ item.repository.nameWithOwner }}
+                                </p>
+                            </div>
+                            <nav class="level is-mobile">
+                                <div class="level-left">
+                                    <a class="level-item">
+                                        <span class="is-small">
+                                            <span class="tag is-success">Additions: {{ item.additions }}</span>
+                                        </span>
+                                    </a>
+                                    <a class="level-item">
+                                        <span class="is-small">
+                                            <span class="tag is-danger">Deletions: {{ item.deletions }}</span></small>
+                                        </span>
+                                        <a class="level-item">
+                                            <span class="is-small">
+                                                <span class="tag is-info">Files: {{ item.changedFiles }}</span>
+                                            </span>
+                                        </a>
+                                    </a>
+                                </div>
+                            </nav>
+                        </div>
+                    </article>
+                </div>
+            </template>
+        </div>
 
         <footer class="footer">
             <div class="content has-text-centered">
@@ -32,9 +86,9 @@
         </footer>
     </div>
 
-
     <script src="https://unpkg.com/vue@2.6.0/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
     <script src="main.js"></script>
 </body>
 
