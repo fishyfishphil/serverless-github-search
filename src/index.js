@@ -21,13 +21,17 @@ async function returnPullRequests(user) {
         user(login: "${user}") {
           pullRequests(first: 100) {
             edges {
-              node {
-                repository {
-                  nameWithOwner
-                }
-                title
-                createdAt
-              }
+                node {
+                    repository {
+                        nameWithOwner
+                    }
+                    title
+                    url
+                    createdAt
+                    additions
+                    deletions
+                    changedFiles
+                  }
             }
           }
         }
