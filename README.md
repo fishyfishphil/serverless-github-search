@@ -31,3 +31,4 @@ serverless deploy
 ```bash
 serverless s3sync
 ```
+8. Go get the S3 bucket public URL from the AWS console.
